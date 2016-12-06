@@ -1,0 +1,84 @@
+# Superset/Helper functions specific to FreeUDFLibC, i.e. not included
+# in the DELPHI version.
+# NOTE: This is a list of EXPORTED functions - these appear in the shared
+# library and are intended for use by external applications.
+
+internal_replace		# Kernel of Replace
+internal_blob2str		#
+lrtrim				#
+strlower			#
+strupper			#
+
+wintransform
+DumpBlobToFile			#
+FindNthWordBlob			#
+
+#
+#  Math functions
+#
+
+Round				# Superset
+RoundD				# Superset
+
+#
+#  String functions
+#
+
+EncryptMD5			# Superset
+ConvertFromBase			# Superset
+ConvertToBase			# Superset
+ConvertFrom33			# Superset
+ConvertTo33			# Superset
+Replace				# Superset
+
+#
+#  Time/Date functions
+#
+
+IsLeapYear			# Superset
+StrToTime			# Superset
+
+#
+#  Helper fuctions
+#
+
+# strings
+rtrim				# Kernel of the rTrim wrapper
+findword			# Kernel of the FindWord wrapper 
+
+# Processes, UNIX-specific
+shell				# Spawning, returns child's PID
+waitchild			# Waiting, returns child's exit code
+
+
+#
+#  Under development
+#
+
+BlobBinCmp			# This is really BlobComp
+ValidateBillingExpression	# Strangerly absent
+
+#
+#  These come from parser (kernel of the EvaluateExpression)
+#
+
+yyparse				# Main parser function
+yylex				# Main lexer function
+yy_scan_bytes			# Lexer stuff
+yy_scan_buffer			# Ditto
+yy_scan_string			# Ditto
+yy_switch_to_buffer		# Ditto
+yy_create_buffer		# Ditto
+yy_delete_buffer		# Ditto
+yy_flush_buffer			# Ditto
+yy_init_buffer			# Ditto
+yy_load_buffer_state		# Ditto
+yyrestart			# Ditto
+searchlist			# Helper for in-lexer symbol substitution
+addtolist			# Ditto
+cleanup_list			# Ditto
+yyerrormy			# Helper for messages
+
+# Time
+
+hourcolonmin			# hh:mm

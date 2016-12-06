@@ -1,0 +1,9 @@
+June 6, 1999 -
+
+  find_word, find_word_index - (fixed)
+	The find word algorithms weren't finding word boundaries as
+	nicely as they should.
+	The new algorithm defines a word as
+	  any series of consecutive alpha-numerics
+	  and the possibility of an included apostrophe.
+

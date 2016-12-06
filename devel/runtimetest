@@ -1,0 +1,15 @@
+#!/usr/bin/awk -f
+# Script to test a STANDALONE built runtime parser module.
+BEGIN {
+	getline
+	FS="; "
+	RS=";\n"
+	}
+	{
+	printf("%s| %s: ", $1, $2)
+	gsub("\"", "\'");
+	gsub("\\$", "\\$");
+#	gsub("\\.", "\\.");
+#	gsub("\\/", "\\/");
+	system(file " \"" $2 "\" \"" $1 "\"")
+	}

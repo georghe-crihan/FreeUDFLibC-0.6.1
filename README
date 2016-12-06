@@ -1,0 +1,66 @@
+FreeUDFLibC - copyright (c) 1999 Gregory Deatz
+
+Subject to the terms of the license provided in the file
+COPYING.
+
+---
+
+FreeUDFLibC was written as a C port of FreeUDFLib, which was
+originally written in Delphi (a Windows variant of Pascal).
+
+Many functions have been omitted, and others have been included.
+
+The main reason for porting FreeUDFLib to C is so that FreeUDFLib is
+more platform independent. Although FreeUDFLibC is initially being
+distributed with Makefile's for only Solaris and Linux, there is no
+reason why someone can't create one for Windows, and send it to me.
+
+Not much documentation is provided with this, but I think that most of
+this stuff should be reasonably self-explanatory.
+
+Assuming that you have GNU C installed on your system, which virtually
+*all* Linux boxes have, and GNU C is quite easily obtained for Solaris
+(go to the Solaris Package Archive:
+http://metalab.unc.edu/pub/packages/solaris/sparc/).... This is what
+you need to do to install:
+
+1. gunzip FreeUDFLibC.tar.gz
+2. tar xvf FreeUDFLibC.tar.gz
+3. a. On Linux,
+      cp Makefile.Linux Makefile
+   b. On Solaris,
+      cp Makefile.Solaris Makefile
+4. a. Check that the IB_VERSION variable in your Makefile has the right
+      value.
+   b. If you are using IB50 or lower, then go to the line in the
+      Makefile that reads "LIB_LINK_FLAGS= ...".
+      Remove the entry for -lib_util.
+5. Make sure that the IBASE variable points the right directory for
+   your InterBase root.
+6. make install
+
+If you'd like to test the functions, then take a look at
+ib_test.sql. It performs some minor tests to validate the correctness
+of the routines.
+
+I have also included a "def" file for use with MS installations, I
+have heard that there are no difficulties compiling FreeUDFLibC under
+windows using MSVC. Unfortunately, I don't have a C compiler for
+Windows, so I can't attest to that fact. Also, I don't have a Makefile
+or appropriate instructions for installing/compiling under Windows.
+
+At some point in the future, I will distribute this with pre-compiled
+binaries for Windows, Solaris & Linux. But not yet...
+
+The file ib_declarations.sql can be run against an existing database
+to declare the functions.
+
+So there!
+
+Any problems, bugs, etc... please let me know, and I'll try to fix
+them.
+
+Enjoy,
+
+Greg Deatz
+gdeatz@hlmdd.com

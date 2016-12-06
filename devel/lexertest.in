@@ -1,0 +1,83 @@
+/* Lexer test file. Feed it to lexer					*/
+
+/*
+ * Strings
+ */
+/* Single-quoted */
+sqstr=' ''ddse
+' /* Please note: comments not allowed inside strings! */
+sqstr2 = 'grgh'
+/* Double quoted */
+dqstr =  "ffed f"" fefr"
+dqstr2 = "fdf"
+
+/*
+ * Numeric variables
+ */
+/* Doubles */
+doubleval=0.12
+/* de 
+*/
+/* Integers */
+intval = 24354
+intval2 = $3214
+
+/*
+ * Dates
+ */
+datevar={01/9/99} /* */
+/* Date specifiers */
+vday=DAY
+vyear = /* */YEAR /* d */
+vmonth = MONTH
+
+/*
+ * Arithmetics
+ */
+/* Single tokens */
+minus = -
+ multiply = *
+ divide = /
+plus = +
+/* Modulo & division */
+modulus = mod
+integerdivide = div
+
+/*
+ * Comparison operators
+ */
+equals = =
+less = <
+greater = >
+lesseq = <=
+greeq = >=
+noteq = <>
+noteq2 = !=
+
+/*
+ * Expression grouping
+ */
+leftbrace = (
+rightbrace = )
+
+/*
+ * String operations
+ */
+vcontains = CONTAINS
+vstarts_with = STARTS_WITH
+
+/*
+ * Logical reserved words
+ */
+/* Values */
+vtrue = TRUE
+vfalse = FALSE
+/* Logical operations */
+vor = OR
+vxor = XOR
+vand = AND
+/* Unary inversion */
+vnot = NOT
+/* Inverted logical operations */
+vnor = NOR
+vnand = NAND

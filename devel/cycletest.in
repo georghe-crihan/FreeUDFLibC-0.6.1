@@ -1,0 +1,43 @@
+int 
+EvaluateCycleExpression(char *CycleExpression, int *ExprStart,
+	ISC_QUAD *OldDate, ISC_QUAD *NewDate, double *Amount)
+A cycle expression is a prefix notation expression evaluator that takes
+as input a possible OldDate, NewDate and dollar Amount.
+
+A billing expression is:
+ -- The question, 'Given X bill cycle (in months), is AGE mod X 0?'
+    This question is expressed simply by using a valid integer. For example,
+    in semi-pseudo code:
+	EvaluateCycleExpression('3', 0, '1/1/98', '4/1/98', 0) = 1
+	EvaluateCycleExpression('3', 0, '1/1/98', '3/1/98', 0) = 0
+
+ -- The question, 'Is the age in months of the file >= X?'
+    This question is expressed simply by typing a '>', followed by a valid
+    integer. For example, in semi-pseudo code:
+	EvaluateCycleExpression('>6', 0, '1/1/98', '8/1/98', 0) 
+			returns 1
+	EvaluateCycleExpression('3', 0, '1/1/98', '3/1/98', 0) 
+			rerturns 0
+
+ -- The question, 'Is the dollar value >= X?'
+    This question is expressed simply by typing a '$', followed by a valid
+    float. For example, in semi-pseudo code:
+	EvaluateCycleExpression('$1000', 0, '1/1/98', '8/1/98', 3000)
+			rerurns 1
+	EvaluateCycleExpression('$1000', 0, '1/1/98', '3/1/98', 0)
+			returns 0
+
+A valid expression is:
+  -- OR <valid expression> <valid expression>
+     This allows you to "or" two expressions together.
+  -- AND <valid expression> <valid expression>
+     This allows you to "and" two expressions together.
+  -- NOT <valid expression>
+     This allows you to negate the result of an expression.;
+'3', 0, cast('1/1/98' as date), cast('4/1/98' as date), 0;
+'3', 0, cast('1/1/98' as date), cast('3/1/98' as date), 0;
+'3', 0, cast('1/1/98' as date), cast('3/1/98' as date), 0; 
+'>=6', 0, cast('1/1/98' as date), cast('8/1/98' as date), 0;
+'$1000', 0, cast('1/1/98' as date), cast('8/1/98' as date), 3000;
+'$1000', 0, cast('1/1/98' as date), cast('3/1/98' as date), 0;
+

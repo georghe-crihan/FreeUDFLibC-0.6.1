@@ -1,0 +1,27 @@
+/* Script to execute a sophisticated nested-SELECT query
+ * for the example database of CDs.
+ */
+
+SET  STATS ON;
+INPUT connect.sql;
+
+SELECT cd_title, song_name   
+FROM cd, song 
+WHERE  cd.cd_id IN (
+  SELECT song.cd_id 
+  FROM song 
+  WHERE artist_id=(
+    SELECT artist_id 
+    FROM artist 
+    WHERE artist_name='Herbie Hancock'
+    )
+  ) 
+AND song.song_id IN (
+  SELECT song.song_id
+  FROM song
+  WHERE song.cd_id=cd.cd_id 
+  )
+ORDER BY cd_title
+;
+EXIT;
+

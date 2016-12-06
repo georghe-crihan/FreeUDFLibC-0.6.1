@@ -1,0 +1,65 @@
+		FreeUDFLib C explanatory note
+
+	If You are curious about my motivations, please read ChangeLog. Aside
+	from being a detailed log of the modifications to the library, it
+	contains some technical information, that might be useful when porting/
+	building the library. But, please, make sure to read and agree to the
+	COPYING first!
+
+	The library is now a superset of the DELPHI version (see
+	doc/superset.txt for function names).
+
+	Building:
+	In most cases see INSTALL for information, however, if configure fails
+	you need to do it manually.
+	My platform is FreeBSD, so this paragraph is primarily applicable to
+	it, but, hopefully, at least some things are true for other systems.
+	  $ cp common/Makefile common/config.h .
+          $ vi Makefile # if you need internal MD5 and/or other functions
+	  $ vi config.h # You may Define Debug level, HaveStrlcpy, HaveMD5,
+			# Syslog, etc.
+	  $ make
+	  $ make install
+	NOTE: this is the only way to provide compatibility with old
+	all-lowercase-underscore naming convention. As I strongly discourage
+	falling back to old names, You are very much on your own here, and
+	the method is GNU ld-specific. So, above, instead of make type the
+	following (I assume You use sh)
+	  $ SUBSTS=`awk 'BEGIN{FS="\n";RS="\t"};{gsub(FS," ");print}' common/oldnamesubst.ld` make
+	Afterwards You may run tests (see below)
+	
+	Building under Win32:
+	Get MSVC suit.
+	>copy common\config.h.win config.h
+	>copy common\Makefile.win Makefile
+	>edit Makefile
+	>edit config.h
+	>make
+	
+
+	Testing:
+	Tests are located in tests/ subdirectory. Edit connect.sql/create.sql
+	as appropriate and run buildbase. Try to use filtertest as an output 
+	filter.
+	You might want to edit usertest/passw_test also. 
+	WARNING: Buildbase drops the database.
+
+	Debugging:
+	I use my syslog to do this. It solves the prorblem of reentrancy
+	as well as, being a standalone service (which means it runs in a
+	separate process and is not vulnerable to InterBase/FreeUDFLib
+	crashes) could even run on a different computer, with messages
+	being directed there and processed.
+	I added the following line to my /etc/syslog.conf:
+		local1.info	/var/log/FreeUDFLib.log
+	NOTE: if You already have some software, using local1 facility,
+	      use an available user facility and change the config.h
+	      accordingly.
+	Then isssue an `echo >> /var/log/FreeUDFLib.log`.
+	NOTE: As the logfile might contain some sensitive informations, make
+	sure the proper permissions are set (I use mode 600).
+	Do not forget to send SIGHUP to syslogd afterwards.
+	
+	Porting to other platforms:
+	With other unices it should be easy (I hope).
+

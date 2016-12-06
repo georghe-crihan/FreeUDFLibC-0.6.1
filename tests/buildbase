@@ -1,0 +1,7 @@
+#!/bin/sh
+ISQL=/usr/interbase/bin/isql
+
+$ISQL -i meta
+$ISQL -i populate
+$ISQL -i query
+

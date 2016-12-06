@@ -1,0 +1,14 @@
+#!/usr/bin/awk -f
+# Generate SQL script, corresponding to the test suit given 
+BEGIN {
+	getline
+	FS="; "
+	RS=";\n"
+	print "INPUT connect.sql;\n"
+	}
+	{
+	printf("SELECT f_EvaluateExpression('%s', '%s') FROM rdb$database;\n",$2,$1)
+	}
+END	{
+	print "QUIT;"
+	}

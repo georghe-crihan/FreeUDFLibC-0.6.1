@@ -1,0 +1,985 @@
+\input texinfo   @c -*-texinfo-*-
+@c @pdfcompresslevel=9
+@c @pdfoutput=1
+
+@c %**start of header
+@setfilename FreeUDFLib.info
+@settitle FreeUDFLib
+@c %**end of header
+
+@include version.texi
+
+@iftex
+@finalout
+@end iftex
+
+@titlepage
+@title FreeUDFLib
+@subtitle A Free UDF Library for InterBase Servers
+@subtitle Edition @value{EDITION} for FreeUDFLib version @value{VERSION}
+@subtitle @value{UPDATED}
+@author Gregory H.@: Deatz
+
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 1997, 1998 Gregory H.@: Deatz
+
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+@end titlepage
+
+
+@node Top, Introduction, , (dir)
+
+@ifinfo
+This documents FreeUDFLib @value{VERSION}, a free UDF library for InterBase.
+Last modified: @value{UPDATED}
+@end ifinfo
+
+@menu
+* Introduction:: Introduction.
+* Release notes:: Notes for this release.
+* Installation:: Installing FreeUDFLib
+* Licensing:: Licensing information.
+* Functions:: Functions.
+* About the author: About the author.
+@end menu
+
+@node Introduction, Release notes, Top, Top
+@chapter Introduction
+
+FreeUDFLib is a free UDF library for use with InterBase databases. It is
+written in Delphi, and all source code is provided. Just because it is
+free, however, does not mean that it is public domain. If you have
+questions regarding your rights, please see @pxref{Licensing}.
+
+@menu
+* Acknowledgements:: Acknowledgements.
+* Technical support:: Technical support.
+* About the documentation:: About the documentation.
+@end menu
+
+@node Acknowledgements, Technical support, , Introduction
+@section Acknowledgements
+
+@menu
+* HLMDD:: Thanks to HLMDD.
+* InterBase:: Thanks to InterBase.
+* People:: Contributors and supporters.
+@end menu
+
+@node HLMDD, InterBase, Acknowledgements, Acknowledgements
+@subsection Hoagland, Longo, Moran, Dunst & Doukas
+
+Hoagland, Longo, Moran, Dunst & Doukas is a law firm in New Brunswick,
+NJ. This law firm is one of the most technologically advanced law firms
+in New Jersey, due largely to the fact that their management team has a
+uniquely clear vision of the future use of technology in the legal
+field.
+
+@quotation
+Hoagland, Longo, Moran, Dunst & Doukas is dedicated to providing quality
+legal services to the business community, healthcare and  insurance
+industries. Since our founding in 1977 we have handled thousands of
+matters spanning the spectrum of business transactions and civil
+litigation including automobile negligence, commercial litigation,
+construction claims, coverage,  D and O liability, employment practices
+liability, environmental claims, general liability, municipal liability,
+products liability, professional liability and workers compensation.
+@end quotation
+
+@emph{Very special thanks goes to Hoagland, Longo, Moran, Dunst & Doukas.}
+If you ever require legal representation in the New Jersey area, you
+might want to look these guys up.
+
+@node InterBase, People, HLMDD, Acknowledgements
+@subsection InterBase corporation
+
+@uref{http://www.interbase.com, InterBase} corporation has provided
+their support by providing a home for both FreeUDFLib and
+FreeUDFLib (@pxref{About the author}).
+
+Obviously, without InterBase, FreeUDFLib would be virtually meaningless,
+so a special thanks goes to all at InterBase, with a strong vote of
+support to @emph{please} continue the outstanding work!
+
+@node People, , InterBase, Acknowledgements
+@subsection Contributors and supporters
+
+Here is a list of all who have contributed or otherwise supported the
+project. If your name has been omitted, it is not on purpose:
+
+@itemize @bullet
+@item
+Kenneth J. Doukas, Managing Partner of Hoagland, Longo, Moran, Dunst &
+Doukas.
+@*
+(@email{kenneth_j_doukas@@hlmdd.com})
+
+@item
+Bill Karwin, Director of Publications at InterBase
+Corporation.
+@*
+(@email{bkarwin@@interbase.com})
+
+@item
+Douglas Susan, Partner at Hoagland, Longo, Moran, Dunst &
+Doukas.
+@*
+(@email{douglas_susan@@hlmdd.com})
+
+@item
+Mike Tossy, Director of Marketing at InterBase
+Corporation.
+@*
+(@email{mtossy@@interbase.com})
+
+@item
+Oleg Kukarthev, Gerard Perreault, Stephen W. Boyd, Doug Chamberlin,
+@email{rberryman@@earhlink.net}, John Small
+(@email{john@@yagya.demon.co.uk}), Graham Bremner
+(@email{graham_bremner@@hlmdd.com}), Serge Vannieuwenborgh (sva@@netsol.be),
+@email{brentrose@@clear.net.nz}.
+@end itemize
+
+@node Technical support, About the documentation, Acknowledgements, Introduction
+@section Technical support
+
+@menu
+* Bugs:: How I will resolve bugs.
+* Documentation:: How I will support documentation.
+* Wish lists:: How I will respond to wish lists.
+* Help desk:: How I will respond to questions.
+@end menu
+
+Since FreeUDFLib is free, it is important to give developers a
+sense of what kind of support they can expect. Although there are no
+guarantees of @emph{any kind}, I want to give developers reasonable
+assurances of what they can, in general, expect from me.
+
+I believe that there are four basic levels of support developers
+require:
+
+@enumerate
+@item
+Prompt bug resolution.
+@item
+Thorough documentation.
+@item
+Wish lists.
+@item
+Standard help-desk style support. (How do I do ...? When should I do ... ?)
+@end enumerate
+
+@node Bugs, Documentation, Technical support, Technical support
+@subsection Bugs
+
+FreeUDFLib is intended to be used in production environments! To
+that end, a demonstrated bug @emph{will be fixed} as promptly as
+possible.
+
+Because FreeUDFLib is completely free, developers also have access
+to the source code. If a bug is fixed, send it to me, and I will
+incorporate it in future ``official releases'' of the product.
+
+If a bug cannot be replicated, I will have a difficult time finding it,
+so I can't guarantee resolution of these so-called phantom bugs, but I
+will do my best to resolve them.
+
+If you provide me with a bug fix, your name will be included in the
+acknowledgements section of this manual. Bug reports should be submitted
+as e-mail messages @emph{only}.
+
+@node Documentation, Wish lists, Bugs, Technical support
+@subsection Documentation
+
+The policy on resolving source code bugs also stands for correcting and
+maintaining good documentation. Please send me any and all corrections
+and/or enhancements to the documentation.
+@emph{Every product needs thorough and complete documentation}. Even
+though this product is free, I have a desire to see it used in all
+environments. I can't expect a developer to use it if there is no
+documentation.
+
+I can't guarantee that I will respond to you, only that your comments
+will be heard and possibly included in future releases.
+
+@node Wish lists, Help desk, Documentation, Technical support
+@subsection Wish lists
+
+Users can feel free to provide me with wish list requests and/or
+FreeUDFLib enhancements.
+
+If you send me a wish list request, you will @emph{not} receive a
+response from me, but you can be assured that your request will be
+considered for future releases.
+
+If you send me an enhancement or extension to FreeUDFLib that you
+would like included in the distribution, I will consider it and respond
+accordingly. Keep in mind, however, that FreeUDFLib and @emph{all}
+source code is free. Do not even think about asking to distribute
+proprietary products with FreeUDFLib.
+
+If I distribute product enhancements written by others than myself, their
+names will be included in the acknowledgements section of this manual,
+and their source code will be acknowledged appropriately.
+
+@node Help desk, , Wish lists, Technical support
+@subsection Help desk
+
+I @emph{don't} do help desk support, at least not in general. You can
+feel free to e-mail me with questions, but it is more likely than not
+that you will not receive a response from me.
+
+Help desk style questions should be directed to an appropriate Internet
+support group. The mailing list @email{INTERBASE@@dx100.mers.com}, for
+example, provides excellent support for InterBase related questions.
+
+If you absolutely require my assistance for some issue, I can provide
+services for standard consulting rates.
+
+@node About the documentation, , Technical support, Introduction
+@section About the documentation
+
+I have used a product called @emph{texinfo} to produce all documentation
+for FreeUDFLib.
+
+From a single source file, I can produce a formatted manual, ready for
+print-out (using @emph{tex}), I can produce html, ready for viewing in a
+browser, and I can produce rich-text for the production of a help file.
+
+I don't see the need for producing a help file, so I haven't included
+one... just the original @emph{texinfo} documentation, a ready-produced
+Acrobat file, and a single HTML manual.
+
+If the reader wishes to find more information on using @emph{texinfo}
+with Windows, search the internet for ``GNU tex texinfo Windows''. (O
+yeah, @emph{texinfo} is free, protected under the GNU Public License)
+
+@node Release notes, Installation, Introduction, Top
+@chapter Release notes
+
+@menu
+* Not-yet-implemented:: Not-yet-implemented features (that are planned).
+* Notes(8/6/98):: Notes from the 8/6/98 Release.
+* Notes(3/13/98):: Notes from the 3/13/98 Release.
+@end menu
+
+@node Not-yet-implemented, Notes(8/6/98), Release notes, Release notes
+@section Planned features
+
+@enumerate
+@item
+Regular expression matcher.
+
+@item
+Search blobs/text strings for regular expressions.
+@end enumerate
+
+@node Notes(8/6/98), Notes(3/13/98), Not-yet-implemented, Release notes
+@section 8/6/98
+
+By default, FreeUDFLib uses thread-local variables to return strings and
+dates to InterBase. There has been some speculation that thread-local
+variables don't work as well as they should, although I haven't been
+able to verify the speculation, (nor has InterBase, for that matter).
+
+However, FreeUDFLib can now be built to use dynamic memory allocation
+(with free_it) as opposed to thread-locals. In @file{udf_glob.pas}, just
+uncomment the conditional define called FREE_IT.
+
+@example
+@{$FREE_IT@}
+@end example
+
+This allows you to declare all string and date UDFs with the free_it
+convention.
+
+New stuff:
+
+@enumerate
+@item
+New function: GenerateSndxIndex(sz: String);
+@*
+You can guess what this function does... It generates the soundex index
+as described on InterBase's web site.
+@item
+New function: LineWrap. It wraps a string and returns a given line. See
+its definition below.
+@end enumerate
+
+Several functions were removed which did not work, and so were cluttering
+up the source.
+
+@node Notes(3/13/98), , Notes(8/6/98), Release notes
+@section 3/13/98
+
+Thread-safety has been pretty rigorously tested. Users should not have
+any problems with FreeUDFLib.
+
+New functions:
+@enumerate
+@item
+@code{EvaluateExpression}: evalute a textual expression with support for
+symbols and string, date and numeric literals.
+@end enumerate
+
+@node Installation, Licensing, Release notes, Top
+@chapter Installation
+
+After unzipping @code{FreeUDFLib.zip}, copy @file{FreeUDFLib} to the
+InterBase bin directory, most probably
+
+@example
+c:\Program Files\InterBase Corp\InterBase\Bin
+
+- or -
+
+c:\Program Files\Borland\IntrBase\Bin
+@end example
+
+Whenever you require the use of FreeUDFLib in an InterBase database, run
+the @file{ext_funcs.sql} SQL script against the database.
+
+@node Licensing, Functions, Installation, Top
+@chapter Licensing
+@include ../COPYING
+
+@node Functions, About the author, Licensing, Top
+@chapter Functions
+
+@menu
+* Obsolete:: Obsolete functions.
+* List of Functions:: List of functions.
+@end menu
+
+@node Obsolete, List of Functions, Functions, Functions
+@section Obsolete functions
+
+The below functions are now considered @emph{obsolete}. At some point in
+future releases of FreeUDFLib, they will no longer exist.
+
+When a developer has a convincing argument as to @emph{why} FreeUDFLib
+should continue to include the function, please let me know, and I will
+consider your argument.
+
+@enumerate
+@item
+@code{UserMaintenance} is @emph{not} a terribly useful function for
+adding and deleting users. It asks IB to start the gsec procedure on the
+server to add users, etc... Instead, the @code{IBPassword} function can
+be used with a direct connection to ISC4.GDB for adding, deleting and
+modifying users.
+@end enumerate
+
+@node List of Functions, , Obsolete, Functions
+@section List of functions
+
+Below is a list of all available routines. When appropriate, addition
+documentation will be provided. [This section is not complete, as the
+user can tell]
+
+@menu
+* Strings:: String routines.
+* Misc:: Miscellaneous routines.
+* Blobs:: Blob routines.
+* Math:: Math routines.
+* Time:: Date/Time routines.
+* User:: User maintenance.
+@end menu
+
+@node Strings, Misc, List of Functions, List of Functions
+@subsection String routines
+
+@deftypefn Function PChar Character (var @var{Number}: Integer)
+Given the provided ordinal value, return the associated character.
+@example
+declare external function f_Character
+  integer
+  returns cstring(2)
+  entry_point 'Character' module_name 'FreeUDFLib';
+@end example
+@end deftypefn
+
+@deftypefn Function PChar CRLF ()
+Return the carriage return/line feed string.
+@example
+declare external function f_CRLF
+  returns cstring(3)
+  entry_point 'CRLF' module_name 'FreeUDFLib';
+@end example
+@end deftypefn
+
+@deftypefn Function PChar FindNthWord (@var{sz}: PChar; var @var{i}: Integer)
+A convenient way to find the @var{n}th word in a string; however, if you
+are scanning an entire string to pick out each individual word, it is
+recommended that you use FindWord and FindWordIndex instead.
+@end deftypefn
+
+@deftypefn Function PChar FindWord (@var{sz}: PChar; var @var{i}: Integer)
+Given a starting position, return the first word starting at that
+position.
+@*
+NOTE: Strings passed to FindWord start at index 0.
+@end deftypefn
+
+@deftypefn Function Integer FindWordIndex (@var{sz}: PChar; var @var{i}: Integer)
+Given a starting position, return the index of the first word that
+starts on or after that position. This function helps to account for
+whitespace.
+@*
+NOTE: Strings passed to FindWordIndex start at index 0.
+@end deftypefn
+
+@deftypefn Function PChar GenerateFormattedName (@var{szFormatString}, @var{szNamePrefix}, @var{szFirstName}, @var{szMiddleInitial}, @var{szLastName}, @var{szNameSuffix}: PChar) 
+Given a name prefix (@var{szNamePrefix}), a first name
+(@var{szFirstName}), a middle initial (@var{szMiddleInitial}), a last
+name (@var{szLastname}), and a name suffix (@var{sznameSuffix}),
+construct a formatted name based on the provided format string
+(@var{szFormatString}).
+
+A format string is constructed as follows:
+
+@example
+Commands:
+ \<pretext>\<posttext>\P  --> name prefix
+ \<pretext>\<posttext>\F  --> first name
+ \<pretext>\<posttext>\M  --> middle initial
+ \<pretext>\<posttext>\L  --> last name
+ \<pretext>\<posttext>\S  --> name suffix
+ @@ - escape character; anything following an @ will be printed as a literal
+
+ --options (affect the entire string)--
+ \\\A   --> print only alpha's, i.e. strip string of anything but alpha's
+ \\\9   --> print only alpha's and numeric's, i.e. strip string of
+            everything but alpha's
+ \\\U   --> uppercase string
+@end example
+
+All other strings are just printed as-is.
+
+You use "pretext" and "posttext" values when the text preceding or
+succeeding a field depends on the presence of a value in the field.
+An example:
+
+@example
+  format string = '\\ \P\\ \F\\. \M\\\L\, \\S'
+
+  1. Name Prefix = Mr.
+     First name = John
+     Middle initial = M
+     Last name = Smith
+     Name suffix = III
+       GenerateFormattedName yields Mr. John M. Smith, III
+  2. Same as (1), but
+     Name prefix is blank
+     Middle initial is blank
+     Name suffix is blank
+       GenerateFormattedName yields John Smith
+  3. Same as (1), but
+     Name prefix is blank
+     Name suffix is blank
+       GenerateFormattedName yields John M. Smith
+@end example
+@end deftypefn
+
+@deftypefn Function PChar GenerateSndxIndex (@var{sz}: PChar)
+Given a string @var{sz}, compute its @emph{soundex} value. The
+documentation for this implementation of soundex can be found at
+@uref{http://www.interbase.com/tech/docs/soundex1.html, InterBase}'s web
+site.
+@end deftypefn
+
+
+@deftypefn Function PChar Left (@var{sz}: PChar; var @var{Number}: Integer)
+Return the @var{Number} leftmost characters of @var{sz}.
+@end deftypefn
+
+@deftypefn Function PChar LineWrap (@var{sz}: PChar; var @var{Start}, @var{ColWidth}: Integer)
+Given a starting point (@var{Start}) in a string, and a column width,
+@var{ColWidth}, return the portion of @var{sz}, starting at @var{Start}
+that fits in @var{ColWidth} character spaces.
+@*
+NOTE: Strings passed to LineWrap start at index 0.
+@end deftypefn
+
+@deftypefn Function PChar lrTrim (@var{sz}: PChar)
+Trim whitespace on both sides of @var{sz}. In other words, trim all
+leading and trailing whitespace.
+@end deftypefn
+
+@deftypefn Function PChar lTrim (@var{sz}: PChar)
+Trim whitespace on the left side of @var{sz}. In other words, trim all
+leading whitespace.
+@end deftypefn
+
+@deftypefn Function PChar Mid (@var{sz}: PChar; var Start, @var{Number}: Integer)
+Return @var{Number} characters from @var{sz}, starting at @var{Start} position.
+@*
+NOTE: Strings passed to Mid start at index 0.
+@end deftypefn
+
+@deftypefn Function PChar PadLeft (@var{sz}, @var{szPadString}: PChar; var @var{Len}: Integer)
+Pad the left side of @var{sz} with @var{szPadString} for @var{Len} characters.
+@end deftypefn
+
+@deftypefn Function PChar PadRight (@var{sz}, @var{szPadString}: PChar; var @var{Len}: Integer)
+Pad the right side of @var{sz} with @var{szPadString} for @var{Len} characters.
+@end deftypefn
+
+@deftypefn Function PChar ProperCase (@var{sz}: PChar)
+Proper-case @var{sz}. That is, take each word, and ensure that the first
+letter of each word starts with an uppercase, and the rest of the word
+is in lower-case.
+
+This function is convenient, but it is not, in general, terribly
+useful. After all, it won't ProperCase O'Connor correctly, or McNamara.
+@end deftypefn
+
+@deftypefn Function PChar Right (@var{sz}: PChar; var @var{Number}: Integer)
+Return the @var{Number} rightmost characters from @var{sz}.
+@end deftypefn
+
+@deftypefn Function PChar rTrim (@var{sz}: PChar)
+Trim the right side of @var{sz} of all whitespace. In other words, trim
+all trailing whitespace.
+@end deftypefn
+
+@deftypefn Function Integer StringLength (@var{sz}: PChar)
+Return the @code{StrLen} of @var{sz}.
+@end deftypefn
+
+@deftypefn Function PChar StripString (@var{sz}, @var{szCharsToStrip}: PChar)
+Strip @var{sz} of all characters listed in @var{szCharsToStrip}.
+@end deftypefn
+
+@deftypefn Function Integer SubStr (@var{szSubStr}, @var{szStr}: PChar)
+Look for @var{szSubStr} in @var{szStr}, and return the index. If the
+string is not found, SubStr returns -1.
+@*
+NOTE: Strings passed to SubStr start at index 0.
+@end deftypefn
+
+@deftypefn Function Integer ValidateNameFormat (@var{szFormatString}: PChar)
+Determine if the provided format string (as described above) is valid.
+@end deftypefn
+
+@deftypefn Function Integer ValidateRegularExpression (@var{sz}: PChar)
+Given a string @var{sz}, determine if it is a valid regular expression.
+
+NOTE: This function is not yet implemented.
+@end deftypefn
+
+@deftypefn Function Integer ValidateStringInRE(@var{sz}, @var{re}: PChar)
+Given a string @var{sz}, and a valid regular expression @var{re},
+determine if the string @var{sz} is in the language specified by
+@var{re}.
+
+NOTE: This function is not yet implemented.
+@end deftypefn
+
+@node Misc, Blobs, Strings, List of Functions
+@subsection Miscellaneous routines
+
+@deftypefn Function CloseDebuggerOutput: Integer
+Used in conjunction with @code{SetDebuggerOutput}, and @code{Debug}.
+This function closes whatever the currently set output handle is.
+@end deftypefn
+
+@deftypefn Function Integer Debug (@var{szDebuggerOutput}: PChar)
+Used in conjunction with @code{SetDebuggerOutput} and
+@code{CloseDebuggerOutput}. This function writes a string to the
+currently set debugger handle.
+@end deftypefn
+
+@deftypefn Function Integer EvaluateCycleExpression (@var{szCycleExpression}: PChar; var @var{ExprStart}: Integer; @var{OldDate}, @var{NewDate}: PISC_QUAD; var @var{Amount}: Double)
+A cycle expression is a prefix notation expression evaluator that takes
+as input a possible @var{OldDate}, @var{NewDate} and dollar
+@var{Amount}.
+
+A billing expression is
+
+@itemize @bullet
+@item
+The question, 'Given X bill cycle (in months), is AGE mod X 0?'
+@*
+This question is expressed simply by using a valid integer. For example, in semi-pseudo code
+
+@example
+  EvaluateCycleExpression('3', 0, '1/1/98', '4/1/98', 0) = 1;
+  EvaluateCycleExpression('3', 0, '1/1/98', '3/1/98', 0) = 0;
+@end example
+
+@item
+The question, 'Is the age in months of the file >= X?'
+@*
+This question is expressed simply by typing a '>', followed by a valid
+integer. For example, in semi-pseudo code:
+
+@example
+  EvaluateCycleExpression('>6', 0, '1/1/98', '8/1/98', 0) = 1;
+  EvaluateCycleExpression('3', 0, '1/1/98', '3/1/98', 0) = 0;
+@end example
+
+@item
+The question, 'Is the dollar value >= X?'
+@*
+This question is expressed simply by typing a '$', followed by a valid
+float. For example, in semi-pseudo code:
+
+@example
+  EvaluateCycleExpression('$1000', 0, '1/1/98', '8/1/98', 3000) = 1;
+  EvaluateCycleExpression('$1000', 0, '1/1/98', '3/1/98', 0) = 0;
+@end example
+
+@item
+A valid expression is:
+
+@example
+  OR <valid expression> <valid expression>
+@end example
+
+This allows you to ``or'' two expressions together.
+
+@item
+A valid expression is:
+
+@example
+  AND <valid expression> <valid expression>
+@end example
+
+This allows you to ``and'' two expressions together.
+
+@item
+
+@example
+  NOT <valid expression>
+@end example
+
+This allows you to negate the result of an expression.
+@end itemize
+@end deftypefn
+
+@deftypefn Function PChar EvaluateExpression(@var{szExpr}, @var{szSymbols}: PChar)
+@code{EvaluteExpression} is a fully featured expression evaluator. It
+allows you to use typical parenthesized syntax to compare values of
+symbols passed in a symbol list with constants.
+
+The full syntaxes of an expression and of a symbol list are listed in
+@file{ExprParser.y}, and @file{Symbols.l}, respectively.
+
+This simple example of an expression should be enough to get you
+started, though:
+
+@example
+  EvaluateExpression(
+    '(MyDate=@{1/1/98@}) and (HelloWorld='hello') and (A=B + 9)'
+    'MyDate=@{1/1/98@} HelloWorld='hello' A=18 B=9') = 1
+@end example
+@end deftypefn
+
+@deftypefn Function PChar IBTempPath ()
+Return what InterBase currently thinks the temporary path is.
+@end deftypefn
+
+@deftypefn Function Integer SetDebuggerOutput (@var{szOutputFile}: PChar)
+Used in conjuction with @code{Debug} and
+@code{CloseDebuggerOutput}. This function sets the current output to a
+file, or to @code{STDOUT}. To set the debugger output to a file, just
+pass a file name in. The file name @code{STDOUT} is a special file name
+that tells @code{SetDebuggerOutput} to set the output to the standard output.
+@end deftypefn
+
+@deftypefn Function Integer ValidateCycleExpression (@var{szCycleExpression}: PChar; var @var{ExprStart}: Integer)
+Given a billing cycle-style expression as described in
+@code{EvaluateCycleExpression}, determine if the expression is
+valid.
+@end deftypefn
+
+@node Blobs, Math, Misc, List of Functions
+@subsection Blob routines
+
+@deftypefn Function Integer BlobMaxSegmentLength (@var{Blob}: PBlob)
+Given a @var{Blob}, return the maximum segment size of the blob.
+@end deftypefn
+
+@deftypefn Function Integer BlobSegmentCount (@var{Blob}: PBlob)
+Given a @var{Blob}, return the number of segments used to store the
+blob.
+@end deftypefn
+
+@deftypefn Function Integer BlobSize (@var{Blob}: PBlob)
+Given a @var{Blob}, return the total size of the blob.
+@end deftypefn
+
+The following functions allow you to treat blobs as
+pseudo-strings. These functions have limited utility and should only be
+used when you are confident that your blob is not overly large.
+
+This in mind, if you are using these functions, you might want to
+consider exactly @emph{why} you need these functions, and you might
+possibly be better served by replacing your blobs with large varchars.
+@deftypefn Function PChar BlobAsPChar (@var{Blob}: PBlob)
+Return the passed blob as a string.
+@end deftypefn
+
+@deftypefn Function PChar BlobLeft (@var{Blob}: PBlob; var @var{Number}: Integer)
+Return the @var{Number} leftmost characters of @var{Blob}.
+@end deftypefn
+
+@deftypefn Function PChar BlobLine (@var{Blob}: PBlob; var @var{Number}: Integer)
+Return the @var{Number}'th line of a blob. The first line of a blob is 0.
+@end deftypefn
+
+@deftypefn Function PChar BlobMid (@var{Blob}: PBlob; var @var{Start}, @var{Number}: Integer)
+Return @var{Number} characters from a blob starting at the zero-index
+position @var{Start}.
+@end deftypefn
+
+@deftypefn Function PChar BlobRight (@var{Blob}: PBlob; var @var{Number}: Integer)
+Return the @var{Number} right-most characters from @var{Blob}.
+@end deftypefn
+
+@deftypefn Function PBlob StrBlob (@var{sz}: PChar; @var{Blob}: PBlob)
+Given a string, return it as a blob.
+@end deftypefn
+
+@node Math, Time, Blobs, List of Functions
+@subsection Math routines
+
+@deftypefn Function PChar DollarVal (var @var{Value}: Double)
+Format the passed @var{Value} as a dollar-ish looking string.
+@end deftypefn
+
+@deftypefn Function Double DoubleAbs (var @var{Value}: Double)
+Return the absolute value of @var{Value}.
+@end deftypefn
+
+@deftypefn Function PChar FixedPoint (var @var{Value}: Double; var @var{DecimalPlaces}: Integer)
+Format the passed @var{Value} as a fixed-point string with
+@var{DecimalPlaces} number decimal places.
+@end deftypefn
+
+@deftypefn Function Integer IntegerAbs (var @var{Value}: Integer)
+Return the absolute value of @var{Value}.
+@end deftypefn
+
+@deftypefn Function Integer Modulo (var @var{Numerator}, @var{Denominator}: Integer)
+Divide @var{Numerator} by @var{Denominator} and return the remainder.
+@end deftypefn
+
+@deftypefn Function Integer IsDivisibleBy (var @var{Numerator}, @var{Denominator}: Integer)
+Return 1 if @var{Numerator} is evenly divisible by @var{Denominator},
+otherwise return 0.
+@end deftypefn
+
+@deftypefn Function Double RoundFloat (var @var{Value}, @var{RoundToNearest}: Double)
+Attempt to round the passed @var{Value} to the @var{RoundToNearest}
+fraction.
+@end deftypefn
+
+@deftypefn Function Integer Truncate (var @var{Value}: Double)
+Truncate @var{Value} to an integer value.
+@end deftypefn
+
+@node Time, User, Math, List of Functions
+@subsection Date/Time routines
+
+@deftypefn Function PISC_QUAD AddMonth (@var{ib_date}: PISC_QUAD; var @var{months_to_add}: Integer)
+Add @var{months_to_add} months to @var{ib_date}.
+@end deftypefn
+
+@deftypefn Function PISC_QUAD AddYear (@var{ib_date}: PISC_QUAD; var @var{years_to_add}: Integer)
+Add @var{years_to_add} years to @var{ib_date}.
+@end deftypefn
+
+@deftypefn Function Integer AgeInDays (@var{ib_date}, @var{ib_date_reference}: PISC_QUAD)
+Using @var{ib_date_reference} as a reference point, compute the age in
+days of @var{ib_date}. Typically, @var{ib_date_reference} will be 'Today'.
+@end deftypefn
+
+@deftypefn Function Integer AgeInDaysThreshold (@var{ib_date}, @var{ib_date_reference}: PISC_QUAD; var @var{Min}, @var{UseMin}, @var{Max}, @var{UseMax}: Integer)
+Using @var{ib_date_reference} as a reference point, compute the age in
+days of @var{ib_date}. Typically, @var{ib_date_reference} will be
+'Today'.
+
+When @var{UseMin} is 1, then the minimum age returned is @var{Min}. When
+@var{UseMax} is 1, then the maximum age returned is @var{Max}. Calling
+this function with both @var{UseMin} and @var{UseMax} set to 0, is the
+same as calling its sister function above.
+@end deftypefn
+
+@deftypefn Function Integer AgeInMonths (@var{ib_date}, @var{ib_date_reference}: PISC_QUAD)
+Using @var{ib_date_reference} as a reference point, compute the age in
+months of @var{ib_date}. Typically, @var{ib_date_reference} will be
+'Today'.
+@end deftypefn
+
+@deftypefn Function Integer AgeInMonthsThreshold (@var{ib_date}, @var{ib_date_reference}: PISC_QUAD; var @var{Min}, @var{UseMin}, @var{Max}, @var{UseMax}: Integer)
+Using @var{ib_date_reference} as a reference point, compute the age in
+months of @var{ib_date}. Typically, @var{ib_date_reference} will be
+'Today'.
+
+When @var{UseMin} is 1, then the minimum age returned is @var{Min}. When
+@var{UseMax} is 1, then the maximum age returned is @var{Max}. Calling
+this function with both @var{UseMin} and @var{UseMax} set to 0, is the
+same as calling its sister function above.
+@end deftypefn
+
+@deftypefn Function Integer AgeInWeeks (@var{ib_date}, @var{ib_date_reference}: PISC_QUAD)
+Using @var{ib_date_reference} as a reference point, compute the age in
+weeks of @var{ib_date}. Typically, @var{ib_date_reference} will be
+'Today'.
+@end deftypefn
+
+@deftypefn Function Integer AgeInWeeksThreshold (@var{ib_date}, @var{ib_date_reference}: PISC_QUAD; var @var{Min}, @var{UseMin}, @var{Max}, @var{UseMax}: Integer)
+Using @var{ib_date_reference} as a reference point, compute the age in
+weeks of @var{ib_date}. Typically, @var{ib_date_reference} will be
+'Today'.
+
+When @var{UseMin} is 1, then the minimum age returned is @var{Min}. When
+@var{UseMax} is 1, then the maximum age returned is @var{Max}. Calling
+this function with both @var{UseMin} and @var{UseMax} set to 0, is the
+same as calling its sister function above.
+@end deftypefn
+
+@deftypefn Function PChar CDOWLong (@var{ib_date}: PISC_QUAD)
+Return the long string version of the day of the day of the week. For
+example,
+
+@example
+  CDOWLong('1/1/98') = 'Thursday'
+@end example
+@end deftypefn
+
+@deftypefn Function PChar CDOWShort (@var{ib_date}: PISC_QUAD)
+Return the short string version of the day of the day of the week. For
+example,
+
+@example
+  CDOWShort('1/1/98') = 'Thu'
+@end example
+@end deftypefn
+
+@deftypefn Function PChar CMonthLong (@var{ib_date}: PISC_QUAD)
+Return the long string version of the month. For
+example,
+
+@example
+  CMonthLong('1/1/98') = 'January'
+@end example
+@end deftypefn
+
+@deftypefn Function PChar CMonthShort (@var{ib_date}: PISC_QUAD)
+Return the short string version of the month. For
+example,
+
+@example
+  CMonthShort('1/1/98') = 'Jan'
+@end example
+@end deftypefn
+
+@deftypefn Function Integer DayOfMonth (@var{ib_date}: PISC_QUAD)
+Return the integer day of the month.
+@end deftypefn
+
+@deftypefn Function Integer DayOfWeek (@var{ib_date}: PISC_QUAD)
+Return the integer day of the week.
+@end deftypefn
+
+@deftypefn Function Integer DayOfYear (@var{ib_date}: PISC_QUAD)
+Return the integer day of the year.
+@end deftypefn
+
+@deftypefn Function Integer IsLeapYear (@var{year}: Integer)
+Is the passed year a leap year?
+@end deftypefn
+
+@deftypefn Function PISC_QUAD MaxDate (@var{ib_d1}, @var{ib_d2}: PISC_QUAD)
+Return the larger of the two dates.
+@end deftypefn
+
+@deftypefn Function PISC_QUAD MinDate (@var{ib_d1}, @var{ib_d2}: PISC_QUAD)
+Return the smaller of the two dates.
+@end deftypefn
+
+@deftypefn Function Integer Month (@var{ib_date}: PISC_QUAD)
+Return the integer month of the passed date.
+@end deftypefn
+
+@deftypefn Function Integer Quarter (@var{ib_date}: PISC_QUAD)
+Return the integer quarter of the passed date.
+@end deftypefn
+
+@deftypefn Function PISC_QUAD StripDate (@var{ib_date}: PISC_QUAD)
+Set the date portion of the passed date to the equivalent of '0',
+leaving just the time portion.
+@end deftypefn
+
+@deftypefn Function PISC_QUAD StripTime (@var{ib_date}: PISC_QUAD)
+Set the time portion of the passed date to the equivalent of '0',
+leaving just the date portion.
+@end deftypefn
+
+@deftypefn Function Integer WeekOfYear (@var{ib_date}: PISC_QUAD)
+Return the integer week of the passed date.
+@end deftypefn
+
+@deftypefn Function PChar WOY (@var{ib_date}: PISC_QUAD)
+Return a string which concatenates the year of the date with the integer
+week of the year.
+@end deftypefn
+
+@deftypefn Function Integer Year (@var{ib_date}: PISC_QUAD)
+Return the integer year of the passed date.
+@end deftypefn
+
+@deftypefn Function Integer YearOfYear (@var{ib_date}: PISC_QUAD)
+Return the integer year of the date, but compute as if the WeekOfYear
+was being computed.
+@end deftypefn
+
+
+@node User, , Time, List of Functions
+@subsection User maintenance routines
+
+@deftypefn Function PChar IBPassword (@var{pInStr}@var{}: PChar)
+Given an unencrypted string, return the encrypted string as InterBase
+encrypts it for InterBase passwords.
+
+With InterBase version 5.0, this function is effectively unnecessary,
+since version 5.0 now has the API calls isc_add_user, etc...
+@end deftypefn
+
+@deftypefn Function Integer UserMaintenance(@var{username}, @var{password}, @var{sysuname}, @var{syspword}, @var{action}@var{}: PChar)
+NOTE: This function is obsolete.
+
+This function allows the user to invoke @file{gsec} on the server, thus
+allowing a remote SYSDBA to manage users without using the InterBase
+Server Manager.
+@end deftypefn
+
+@node About the author, , Functions, Top
+@chapter About the author
+
+Gregory Deatz is a senior programmer/analyst at Hoagland, Longo,
+Moran, Dunst & Doukas, a law firm in New Brunswick, NJ. His current
+focus is in legal billing and case management applications. He is the
+author of FreeUDFLib, a free UDF library for InterBase written entirely
+in Delphi, and FreeIBComponents, a set of native InterBase components
+for use with Delphi 3.0. Both of these tools can be found at at
+@uref{http://www.interbase.com/downloads, InterBase Corporation}. He can
+be reached via e-mail at @email{gdeatz@@hlmdd.com}, by voice at (732)
+545-4717, or by fax at (732) 545-4579.
+
+@comment after printing, just stick the TOC at the beginning of the
+@comment document...
+@contents
+@bye
+

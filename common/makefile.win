@@ -1,0 +1,85 @@
+# Makefile for MSVC. You may need to edit config.h
+DATOBJ=gds32dat.lib
+IB_ROOT=C:\PROGRA~1\INTERB~1\INTERB~1
+TIB_ROOT=
+INC=$(TIB_ROOT)\include
+ILIB=$(TIB_ROOT)\lib
+AR=lib
+LD=link
+LFLAGS=-libpath:$(LIB) -libpath:$(ILIB)
+CFLAGS=-W4 -Ox -nologo -I$(INC) -I common -I.
+
+# Support
+OBJECTS=md5.obj setenv.obj syslog.obj strlcpy.obj gmtime_r.obj windows.obj\
+# Core
+	Debug.obj User.obj Misc.obj DateFncs.obj BlobFncs.obj Encrypt.obj\
+	MathFncs.obj StrFncs.obj ExprPars.obj Lexer.obj
+# Local
+
+FreeUDFLib.dll: $(OBJECTS) $(DATOBJ)
+	$(LD) $(LFLAGS) -out:FreeUDFLib.dll -subsystem:console -def:FreeUDFLib.def -dll \
+	ib_util_ms.lib gds32_ms.lib $(DATOBJ) $(OBJECTS)
+
+Debug.obj: Debug.c
+	$(CC) $(CFLAGS) -c Debug.c >> build.log
+
+User.obj: User.c
+	$(CC) $(CFLAGS) -c User.c >> build.log
+
+Misc.obj: Misc.c
+	$(CC) $(CFLAGS) -c  Misc.c >> build.log
+
+DateFncs.obj: DateFncs.c
+	$(CC) $(CFLAGS) -c DateFncs.c >> build.log
+
+BlobFncs.obj: BlobFncs.c
+	$(CC) $(CFLAGS) -c BlobFncs.c >> build.log
+
+Encrypt.obj: Encrypt.c
+	$(CC) $(CFLAGS) -c Encrypt.c >> build.log
+
+MathFncs.obj: MathFncs.c
+	$(CC) $(CFLAGS) -c MathFncs.c >> build.log
+
+StrFncs.obj: StrFncs.c
+	$(CC) $(CFLAGS) -c StrFncs.c >> build.log
+
+# The two below should not be modified directly, but only through bison & flex
+ExprPars.obj: ExprPars.c
+	$(CC) $(CFLAGS) -c ExprPars.c >> build.log
+
+Lexer.obj: Lexer.c
+	$(CC) $(CFLAGS) -c Lexer.c >> build.log
+
+md5.obj: common/md5.c
+	$(CC) $(CFLAGS) -c common/md5.c >> build.log
+
+setenv.obj: common/setenv.c
+	$(CC) $(CFLAGS) -c common/setenv.c >> build.log
+
+strlcpy.obj: common/strlcpy.c
+	$(CC) $(CFLAGS) -c common/strlcpy.c >> build.log
+
+gmtime_r.obj: common/gmtime_r.c
+	$(CC) $(CFLAGS) -c common/gmtime_r.c >> build.log
+
+syslog.obj: common/syslog.c
+	$(CC) $(CFLAGS) -c common/syslog.c >> build.log
+
+windows.obj: windows.c
+	$(CC) $(CFLAGS) -c windows.c >> build.log
+
+# Local stuff
+
+# If You have a broken gds32_ms.lib
+gds32dat.lib: gds32dat.def
+	$(AR) -def:gds32dat.def -out:gds32dat.lib >> build.log
+
+clean:
+	del $(OBJECTS) gds32_ms.lib gds32_ms.exp FreeUDFLib.exp FreeUDFLib.lib build.log
+
+distclean: clean
+	del FreeUDFLib.dll 
+
+inst:
+	copy FreeUDFLib.dll $(IB_ROOT)\lib\ 

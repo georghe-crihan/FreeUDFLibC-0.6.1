@@ -1,0 +1,37 @@
+CONNECT "/usr/interbase/isc4.gdb"
+  USER "SYSDBA"
+  PASSWORD "masterkey";
+
+DELETE FROM users
+  WHERE user_name='B';
+
+DECLARE EXTERNAL FUNCTION f_IBPassword
+  CSTRING(256)
+  RETURNS CSTRING(256) FREE_IT
+  ENTRY_POINT 'IBPassword'
+  MODULE_NAME 'FreeUDFLib';
+
+INSERT INTO users (user_name, passwd)
+  VALUES ('B', f_IBPassword(''));
+
+DROP EXTERNAL FUNCTION f_IBPassword;
+
+COMMIT;
+
+CONNECT "/usr/interbase/isc4.gdb"
+  USER "B"
+;
+--  PASSWORD "";
+
+SELECT passwd FROM users;
+
+QUIT;
+
+-- CONNECT "/usr/interbase/isc4.gdb"
+--  USER "SYSDBA"
+--  PASSWORD "masterkey";
+
+-- DELETE FROM users
+--  WHERE user_name='A';
+
+EXIT;

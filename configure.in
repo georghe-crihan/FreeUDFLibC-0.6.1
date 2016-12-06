@@ -1,0 +1,169 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(udf_glob.h)
+AM_INIT_AUTOMAKE(FreeUDFLibC, 0.6.1)
+AC_DEFINE(RELEASE, "1999-Jul-12")
+AM_CONFIG_HEADER(config.h)
+AM_SANITY_CHECK
+AC_PROG_CC
+AM_C_PROTOTYPES
+
+dnl Checks for programs.
+AC_DISABLE_STATIC
+AM_PROG_LIBTOOL
+AC_PROG_YACC
+AM_PROG_LEX
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS(malloc.h syslog.h unistd.h)
+AC_CHECK_HEADER(ibase.h,,AC_MSG_ERROR([ibase.h not found. Cannot continue.]))
+dnl Check if we need to fix an older InterBase
+AC_MSG_CHECKING([for BLOBCALLBACK in ibase.h])
+AC_EGREP_HEADER(BLOBCALLBACK, ibase.h, AC_DEFINE(HAVE_BLOBCALLBACK) AC_MSG_RESULT([yes]), AC_MSG_RESULT([no. Own BLOBCALLBACK suplied.]))
+
+dnl Fallback if no multithread support
+AC_DEFINE(MALLOC, malloc)
+
+dnl Checks for libraries.
+dnl Check if we have a system-wide crypt support (DES) 
+AC_CHECK_LIB(crypt, crypt)
+dnl Check if site has a working -lgds
+AC_CHECK_LIB(gds, isc_decode_date, ,AC_MSG_ERROR([libgds not found. Cannot continue.]))
+dnl Check if we have multi-thread support 
+AC_CHECK_LIB(ib_util, ib_util_malloc, AC_DEFINE(MALLOC, IB_UTIL_malloc))
+dnl Check if we got system MD5 support 
+AC_CHECK_LIB(md, MD5Init)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_PID_T
+AC_STRUCT_TM
+
+dnl Checks for library functions.
+AC_FUNC_VFORK
+AC_CHECK_FUNCS(mktime strstr strtol)
+AC_CHECK_FUNC(strcasecmp, ,AC_DEFINE(strcasecmp,stricmp))
+dnl AC_REPLACE_FUNCS(gmtime_r)
+AC_CHECK_FUNCS(gmtime_r)
+dnl AC_REPLACE_FUNCS(strlcpy)
+AC_CHECK_FUNCS(strlcpy)
+dnl AC_REPLACE_FUNCS(setenv)
+AC_CHECK_FUNCS(setenv)
+dnl AC_REPLACE_FUNCS(strerror)
+AC_CHECK_FUNCS(strerror)
+
+dnl Partial locale stuff
+
+AC_MSG_CHECKING(whether a locale is imposed)
+AC_ARG_ENABLE(locale,
+[  --enable-locale=LOCALE  Valid ISO locale string to force the library],
+[	case "$enableval" in
+	yes|no)
+		AC_MSG_RESULT(no)
+		;;
+	*)
+		AC_MSG_RESULT($enableval)
+		AC_DEFINE_UNQUOTED(LOCALE_SUPPORT, "$enableval",
+			[ISO Locale, see locale(3)])
+		;;
+	esac],
+	AC_MSG_RESULT(no)
+)
+
+dnl Debugging stuff
+
+AC_MSG_CHECKING(if building a debug version)
+AC_ARG_ENABLE(debug,
+[  --enable-debug=LEVEL	  Debug level if building a debug version],
+[	case "$enableval" in
+	yes|no)
+		AC_MSG_RESULT(production version)
+		;;
+	*)
+		AC_MSG_RESULT(debug level $enableval)
+		AC_DEFINE_UNQUOTED(DEBUG, $enableval,
+			[Debug level, 2 - most verbose])
+		;;
+	esac],
+	AC_MSG_RESULT(production version)
+)
+
+AC_MSG_CHECKING(facility for syslog)
+AC_ARG_WITH(logfacility,
+[ --with-logfacility=FACILITY
+			Facility for log messages           [LOG_INFO]],
+[	case "$withval" in
+	yes|no)
+		AC_MSG_RESULT(using default value: LOG_INFO)
+		AC_DEFINE_UNQUOTED(LOG_FACILITY, LOG_INFO,
+			[Desired syslog facility - see syslog(3)])
+		;;
+	*)
+		AC_MSG_RESULT($withval)
+		AC_DEFINE_UNQUOTED(LOG_FACILITY, $withval | LOG_INFO,
+			[Desired syslog facility - see syslog(3)])
+		;;
+	esac],
+	AC_MSG_RESULT(using default value: LOG_INFO)
+	AC_DEFINE_UNQUOTED(LOG_FACILITY, LOG_INFO,
+		[Desired syslog facility - see syslog(3)])
+)
+
+#AC_ARG_WITH(logfacility,
+#[  --with-logfacility=FACILITY
+#			  Facility for log messages],
+#[	case "$withval" in
+#	LOG_*)
+#		$lfac=$withval
+#		;;
+#	
+#	*)
+#		lfac="LOG_INFO"
+#		;;
+#	esac],
+#)
+#	AC_MSG_RESULT(LOG_INFO)
+#	AC_DEFINE_UNQUOTED(LOG_FACILITY, LOG_INFO,
+#		[Desired syslog facility - see syslog(3)])
+
+dnl Interbase stuff
+ibhome="none"
+AC_ARG_WITH(interbase,
+[  --with-interbase=PATH   Path to InterBase home directory],
+[	case "$withval" in
+	yes|no)
+		;;
+	*)
+		ibhome=${withval}
+		;;
+	esac],
+)
+
+AC_MSG_CHECKING(InterBase path)
+for A in /opt/interbase /usr/interbase $ibhome; do
+  if test -d $A; then
+   if test -f $A/isc4.gdb; then
+     ibhome=$A;
+     break;
+   fi;
+  fi;
+done;
+AC_MSG_RESULT($ibhome)
+
+if test $ibhome = "none"; then
+  echo No InterBase found. Aborting.
+  exit;
+fi
+
+AC_DEFINE_UNQUOTED(IBHome, "$ibhome")
+AC_CHECK_PROGS(gsec, gsec gsec.exe, gsec, $ibhome/bin:$IB_BIN)
+AC_DEFINE_UNQUOTED(GSEC,"$gsec")
+
+# This is necessary so that .o files in LIBOBJS are also built via
+# the ANSI2KNR-filtering rules.
+LIBOBJS=`echo $LIBOBJS|sed 's/\.o /\$U.o /g;s/\.o$/\$U.o/'`
+
+AC_OUTPUT(Makefile doc/Makefile tests/Makefile devel/Makefile local/Makefile)

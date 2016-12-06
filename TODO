@@ -1,0 +1,8 @@
+- Fix configure.in to automatically provide absent functions
+
+- Provide crypt() for all platforms (notably Win32). I do not want
+	to deal with export restrictions, laws, etc. If You need it
+	under WIN32, get yourself a free WIN32 DES implementation. 
+        (From WWW.OpenBSD.org, for instance).
+
+- Provide automake 'make check' for tests?

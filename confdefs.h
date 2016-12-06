@@ -1,0 +1,23 @@
+
+#define PACKAGE "FreeUDFLibC"
+#define VERSION "0.6.1"
+#define RELEASE "1999-Jul-12"
+#define PROTOTYPES 1
+#define YYTEXT_POINTER 1
+#define STDC_HEADERS 1
+#define HAVE_SYS_WAIT_H 1
+#define HAVE_SYSLOG_H 1
+#define HAVE_UNISTD_H 1
+#define MALLOC malloc
+#define HAVE_LIBCRYPT 1
+#define HAVE_LIBGDS 1
+#define MALLOC ib_util_malloc
+#define HAVE_LIBMD 1
+#define HAVE_MKTIME 1
+#define HAVE_STRSTR 1
+#define HAVE_STRTOL 1
+#define HAVE_GMTIME_R 1
+#define HAVE_STRLCPY 1
+#define HAVE_SETENV 1
+#define HAVE_STRERROR 1
+#define LOG_FACILITY LOG_INFO

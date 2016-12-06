@@ -1,0 +1,104 @@
+#undef HAVE_BLOBCALLBACK
+
+/* config.h.  Generated automatically by configure.  */
+/* config.h.in.  Generated automatically from configure.in by autoheader.  */
+
+/* Define if you have <sys/wait.h> that is POSIX.1 compatible.  */
+#undef HAVE_SYS_WAIT_H
+
+typedef unsigned int size_t;
+
+/* Define strcasecmp as stricmp if we do not have it */
+#define strcasecmp stricmp                                  
+
+/* Define if you have <vfork.h>.  */
+#undef HAVE_VFORK_H
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#define pid_t int
+
+/* Define if you have the ANSI C header files.  */
+#define STDC_HEADERS 1
+
+/* Define if your <sys/time.h> declares struct tm.  */
+/* #undef TM_IN_SYS_TIME */
+
+/* Define vfork as fork if vfork does not work.  */
+#define vfork fork
+
+/* Define if lex declares yytext as a char * by default, not a char[].  */
+#define YYTEXT_POINTER 1
+
+/* Multi-threaded version of malloc */
+//#define MALLOC ib_util_malloc
+#define MALLOC malloc
+
+/* InterBase home directory */
+#define IBHome "/usr/interbase"
+
+/* InterBase gsec */
+#define GSEC "gsec"
+
+/* Version stuff */
+#define RELEASE "1999-Jul-12"
+
+/* Define if you have the mktime function.  */
+#define HAVE_MKTIME 1
+
+/* Define if you have the setenv function.  */
+//#define HAVE_SETENV 1
+
+/* Define if you have the strerror function.  */
+#define HAVE_STRERROR 1
+
+/* Define if you have the strlcpy function.  */
+//#define HAVE_STRLCPY 1
+
+/* Define if you have the strstr function.  */
+#define HAVE_STRSTR 1
+
+/* Define if you have the strtol function.  */
+#define HAVE_STRTOL 1
+
+/* Define if you have the <ibase.h> header file.  */
+#define HAVE_IBASE_H 1
+
+/* Define if you have the <malloc.h> header file.  */
+/* #undef HAVE_MALLOC_H */
+
+/* Define if you have the <string.h> header file.  */
+/* #undef HAVE_STRING_H */
+
+/* Define if you have the <syslog.h> header file.  */
+#undef HAVE_SYSLOG_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H 
+
+/* Define if you have the crypt library (-lcrypt).  */
+#undef HAVE_LIBCRYPT
+
+/* Define if you have the gds library (-lgds).  */
+#define HAVE_LIBGDS 1
+
+/* Define if you have the md library (-lmd).  */
+#define HAVE_LIBMD 1
+
+/* Name of package */
+#define PACKAGE "FreeUDFLibC"
+
+/* Version number of package */
+#define VERSION "0.6.1"
+
+/* Define if compiler has function prototypes */
+#define PROTOTYPES 1
+
+/* ISO Locale, see locale(3) */
+#define LOCALE_SUPPORT "fr_FR.ISO_8859-1"
+
+/* Debug level, 2 - most verbose */
+#define DEBUG 2
+
+/* Desired syslog facility - see syslog(3) */
+#define LOG_FACILITY LOG_LOCAL1 | LOG_INFO
+

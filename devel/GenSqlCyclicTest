@@ -1,0 +1,15 @@
+#!/usr/bin/awk -f
+# Generate SQL script, corresponding to the test suit given 
+BEGIN {
+	FS="\, "
+	RS=";\n"
+	getline
+	print "INPUT connect.sql;\n"
+	}
+	{
+	printf("SELECT f_ValidateCycleExpression(%s, %s) FROM rdb$database;\n",$1,$2)
+	printf("SELECT f_EvaluateCycleExpression(%s, %s, %s, %s, %s) FROM rdb$database;\n",$1,$2,$3,$4,$5)
+	}
+END	{
+	print "QUIT;"
+	}

@@ -1,0 +1,44 @@
+CONNECT "/usr/interbase/isc4.gdb"
+  USER "SYSDBA"
+  PASSWORD "masterkey";
+
+DELETE FROM users
+  WHERE user_name='A';
+
+DECLARE EXTERNAL FUNCTION f_UserMaintenance
+  CSTRING(256),
+  CSTRING(256),
+  CSTRING(256),
+  CSTRING(256),
+  CSTRING(256)
+  RETURNS INTEGER BY VALUE 
+  ENTRY_POINT 'UserMaintenance'
+  MODULE_NAME 'FreeUDFLib';
+
+SELECT  f_UserMaintenance('A','','SYSDBA','masterkey', 'D') 
+  FROM users; 
+
+SELECT  f_UserMaintenance('A','garbagekey','SYSDBA','masterkey', 'A') 
+  FROM users; 
+
+DROP EXTERNAL FUNCTION f_UserMaintenance;
+
+COMMIT;
+
+CONNECT "localhost:/usr/interbase/isc4.gdb"
+  USER "A"
+  PASSWORD "garbagekey";
+
+SELECT user_name, passwd FROM users
+  WHERE user_name='A';
+
+COMMIT;
+
+CONNECT "/usr/interbase/isc4.gdb"
+  USER "SYSDBA"
+  PASSWORD "masterkey";
+
+DELETE FROM users
+  WHERE user_name='A';
+
+EXIT;

@@ -1,0 +1,18 @@
+#!/bin/sh
+# Script to build a STANDALONE parser runtime module
+bison -d ../ExprPars.y
+cc -Wall -c -O -I.. -DSTANDALONE -o parser.o ../ExprPars.tab.c
+
+flex -ib ../Lexer.l
+cc -Wall -O -I.. -o small lex.yy.c parser.o
+flex -ib -Cf ../Lexer.l
+cc -Wall -O -I.. -o fast lex.yy.c parser.o
+rm -f parser.o lex.yy.c 
+if [ $# -gt 0 ]; then 
+strip small
+strip fast
+time -hlo rep ./runtimetest -v file=./small ../tests/parsertest > /dev/null
+time -hlao rep ./runtimetest -v file=./fast ../tests/parsertest > /dev/null
+less rep
+rm -f rep
+fi

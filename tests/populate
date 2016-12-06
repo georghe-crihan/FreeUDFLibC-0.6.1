@@ -1,0 +1,30 @@
+/* Script to populate an example database of CDs
+ */
+
+INPUT connect.sql;
+
+INSERT INTO record_label(record_label_id, record_label_name) VALUES (1,'Motown');
+INSERT INTO record_label(record_label_id, record_label_name) VALUES (2,'Columbia');
+INSERT INTO record_label(record_label_id, record_label_name) VALUES (3,'Blue Note');
+INSERT INTO artist(artist_id, artist_name) VALUES (1, 'Stevie Wonder');
+INSERT INTO artist(artist_id, artist_name) VALUES (2, 'Herbie Hancock');
+INSERT INTO artist(artist_id, artist_name) VALUES (3, 'Miles Davis Quintet');
+INSERT INTO artist(artist_id, artist_name) VALUES (4, 'Wayne Shorter');
+INSERT INTO cd(cd_id, record_label_id, cd_title) VALUES(1, 1, 'Talking Book');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES(1, 1, 1, 'You Are the Sunshine of My Life');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES(2, 1, 1, 'Maybe Your Baby');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES(3, 1, 1, 'Superstition');
+INSERT INTO cd(cd_id, record_label_id, cd_title) VALUES (2, 2, 'Miles Smiles');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (4, 2, 3, 'Orbits');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (5, 2, 3, 'Circle');
+INSERT INTO cd(cd_id, record_label_id, cd_title) VALUES (3, 3, 'Speak No Evil');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (6, 3, 4, 'Witch Hunt');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (7, 3, 4, 'Fee-Fi-Fo-Fum');
+INSERT INTO cd(cd_id, record_label_id, cd_title) VALUES (4, 2, 'Headhunters');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (8, 4, 2, 'Chameleon');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (9, 4, 2, 'Watermelon Man');
+INSERT INTO cd(cd_id, record_label_id, cd_title) VALUES (5, 3, 'Maiden Voyage');
+INSERT INTO song(song_id, cd_id, artist_id, song_name) VALUES (10, 5, 2, 'Maiden Voyage');
+INSERT INTO t (id, b) VALUES (1,f_strblob('This is just a text description'));
+EXIT;
+

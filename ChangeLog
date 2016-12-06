@@ -1,0 +1,88 @@
+[12.01.2003 12:52] ChangeLog started
+
+- Changed function names to make them compatible with DELPHI version.
+	My task was to migrate an InterBase server, running under a DELPHI
+	application using a derivative of the FreeUDFLib (DELPHI), from a
+	Windows-based host to a FreeBSD Unix-based host without loosing the
+	application's functionality.
+	IMHO, there is little reason to keep to the gds library naming
+	convention (my_super_slow_bulky_function) for the price of
+	incompatibility, besides, as far as I know, there is no way to directly
+	call an UDF from your application, and you choose the way it is named,
+	when declaring it to InterBase as external.
+
+- Placed Debug.c function stubs in a separate file, since it is entirely
+	Win32 specific and makes little use under UNIX. Stubs are retained,
+	however, for DELPHI version compatibility. 
+
+- Added Debug.h to allow syslog-aided debugging and, potentially, other
+	features.
+
+- Reorganized the source tree: changed file names to conform to the DELPHI
+	version. This should make further parallel development easier.
+	global.h is now udf_glob.h for conformance and to ensure there are
+	no name clashes.
+	TimeFncs is now DateFncs for consistency.
+
+- Optimized StrFncs.c for speed. BSD-specific strlcpy could be emulated.
+	Besides becoming clea[rn]er, the code is faster, at least on Intel
+	architecture, since i386 UNIX system libraries are optimized to use
+	lods/cmps/stos/movs CPU string instructions, which is faster than
+	byte by byte copy. This could probably hold true on RISC architectures
+	(SPARC, Apollo/HP-PA).
+	I also made it more portable, where I could, replacing (char) 0 by
+	'\0'. (As far as I know, this does not assume, that a string is
+	terminated by ASCII 0)
+	Optimization is justified by the fact, that strings are a "non-native"
+	datatype for the CPU, and, often working with long strings has its
+	negative impact.
+
+- Completed MathFncs.c to contain all functions present in its DELPHI
+	counterpart.
+
+- Completed DateFncs.c to contain all functions present in its DELPHI
+	counterpart.
+ 	Included some general-purpose functions I had to port in my task.
+
+- Completed StrFncs.c to contain all functions present in its DELPHI
+	counterpart.
+
+- Reorganized the Makefile - added conditionals & defines to facilitate
+ 	building.
+	Hope I haven't made it BSD-specific, anyway, I tried to stick to AT&T
+	standard.
+
+- Ported name formatting functions, they are too specific to be part of
+	StrFncs.c, so, for consistency, I made them part of Misc.c
+
+- Modified header files to avoid recursive inclusion/redefinition.
+
+- Debug.h is included in udf_glob.h
+
+- Ported IBTempPath() from Misc.c.
+
+- Ported Encrypt.c. Under UNIX DES crypt() is a basic system function, so
+	the file is particularly tiny. It could be merged into Misc.c, but
+	I kept it to conform to its DELPHI counterpart.
+ 
+- Ported User.c. Under any circumstances, this should be stubbed.
+	When decide to do so, define USER_MAINTENANCE_STUBBED.
+
+- Ported BlobFncs.c
+	Added some new functions, general enough to be used by others,
+	as required by task.
+
+- Rewrote lexer and grammar for EvaluateExpression.
+	Flex and Bison required for development, since they're the only tools,
+	producing reentrant parsers. The generated C source is also included
+	to allow building without those tools.
+
+- Rewrote cycle expression stuff.
+
+- Cleaned up debugging subsystem.
+
+- Ported back to Windows.
+	Provided an emulation of syslog.
+	Replaced CriticalSections with mutexes, as the former are less
+	expensive in a multithreaded context. Included common/config.h.win
+	common/Makefile.win. The port is (and going to be) in a Beta state.

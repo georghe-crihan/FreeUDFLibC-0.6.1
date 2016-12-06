@@ -1,0 +1,13 @@
+#!/usr/bin/awk -f
+{
+gsub("==+","")
+gsub("  *"," ")
+gsub("SELECT","")
+gsub("[Ff]_E[Vv][Aa][Ll][Uu][Aa][Tt][Ee]E[Xx][Pp][Rr][Ee][Ss][Ss][Ii][Oo][Nn]","")
+gsub("FROM","")
+gsub("rdb\\$database","")
+gsub(";", "");
+if ($0=="") next
+if ($0==" ") next
+print
+}

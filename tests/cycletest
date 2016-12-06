@@ -1,0 +1,15 @@
+INPUT connect.sql;
+
+SELECT 1, f_ValidateCycleExpression('3', 0) FROM rdb$database;
+SELECT 1, f_EvaluateCycleExpression('3', 0, cast ('1/1/98' as date), cast ('4/1/98' as date), 0) FROM rdb$database;
+SELECT 1, f_ValidateCycleExpression('3', 0) FROM rdb$database;
+SELECT 0, f_EvaluateCycleExpression('3', 0, cast ('1/1/98' as date), cast ('3/1/98' as date), 0) FROM rdb$database;
+SELECT 1, f_ValidateCycleExpression('>=6', 0) FROM rdb$database;
+SELECT 1, f_EvaluateCycleExpression('>=6', 0, cast ('1/1/98' as date), cast ('8/1/98' as date), 0) FROM rdb$database;
+SELECT 1, f_ValidateCycleExpression('3', 0) FROM rdb$database;
+SELECT 0, f_EvaluateCycleExpression('3', 0, cast ('1/1/98' as date), cast ('3/1/98' as date), 0) FROM rdb$database;
+SELECT 1, f_ValidateCycleExpression('$1000', 0) FROM rdb$database;
+SELECT 1, f_EvaluateCycleExpression('$1000', 0, cast ('1/1/98' as date), cast ('8/1/98' as date), 3000) FROM rdb$database;
+SELECT 1,f_ValidateCycleExpression('$1000', 0) FROM rdb$database;
+SELECT 0,f_EvaluateCycleExpression('$1000', 0, cast ('1/1/98' as date), cast ('3/1/98' as date), 0) FROM rdb$database;
+QUIT;

@@ -1,0 +1,22 @@
+/* Script to kill an old database and create
+ * metadata for an example database of CDs
+ */
+
+INPUT connect.sql;
+DROP DATABASE;
+INPUT create.sql;
+CREATE TABLE record_label(record_label_id INT NOT NULL, record_label_name VARCHAR(50), PRIMARY KEY(record_label_id));
+CREATE TABLE cd(cd_id INT NOT NULL, record_label_id INT NOT NULL, cd_title VARCHAR(50), PRIMARY KEY(cd_id), FOREIGN KEY (record_label_id) REFERENCES record_label(record_label_id));
+CREATE TABLE artist(artist_id INT NOT NULL, artist_name VARCHAR(50), PRIMARY KEY(artist_id));
+CREATE TABLE song(song_id INT NOT NULL, cd_id INT NOT NULL, artist_id INT NOT NULL, song_name VARCHAR(50), PRIMARY KEY(song_id), FOREIGN KEY (cd_id) REFERENCES cd (cd_id), FOREIGN KEY (artist_id) REFERENCES artist(artist_id));
+CREATE TABLE t(id INT NOT NULL, b BLOB SUB_TYPE TEXT, PRIMARY KEY(id));
+SHOW TABLES;
+SHOW TABLE cd;
+SHOW TABLE artist;
+SHOW TABLE song;
+SHOW TABLE record_label;
+SHOW TABLE t;
+INPUT ../ext_functions.sql;
+INPUT ../super_ext_functions.sql;
+EXIT;
+
