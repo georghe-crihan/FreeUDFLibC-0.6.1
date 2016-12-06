@@ -1,3 +1,5 @@
+#!/usr/interbase/bin/isql -i
+;
 INPUT connect.sql;
 
 SELECT 1, f_ValidateCycleExpression('3', 0) FROM rdb$database;

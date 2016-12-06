@@ -1,0 +1,60 @@
+#!/bin/sh
+IB_ROOT=/usr/interbase
+MAKE=gmake
+
+# See if we want to do a 'from-scratch' build
+if [ $# -gt 0 ]; then 
+  if [ $1 = "-s" ]; then
+    cd ..
+    $MAKE distclean
+    ./configure --with-logfacility=LOG_LOCAL1 --enable-debug=2 --enable-locale=fr_FR.ISO_8859-1
+    cd local 
+  fi
+fi
+
+# Build first.
+cd ..
+$MAKE
+cd local
+rm -f asymbols adiffs.txt isymbols idiffs.txt symbols diffs.txt
+cd ..
+SUBSTS=`awk 'BEGIN{FS="\n";RS="\t"};{gsub(FS," ");print}' local/subst.ld` CRYPT_LIB="--whole-archive local/.libs/liblocal.al --no-whole-archive"  make -f common/Makefile
+cd local
+cat ../FreeUDFLibC.def ppkudflib.def.add > ppkudflib.def 
+nm -D ../FreeUDFLib.so | ./superfilter.awk -v fsuperset="../doc/superset.txt" -v libdef="ppkudflib.def" -v diffs="diffs.txt" > symbols
+rm -f ppkudflib.def
+strip ../FreeUDFLib.so
+awk '{if($1!="EXPORTS") print "| T ",$1}' symbols |./superfilter.awk \
+ -v fsuperset="/dev/null" -v libdef="ppkibaccess.def" -v diffs="adiffs.txt" \
+ > asymbols
+awk '{if($1!="EXPORTS") print "| T ", $1}' asymbols | ./superfilter.awk \
+ -v fsuperset="/dev/null" -v libdef="ppkib1.def" -v diffs="idiffs.txt" \
+ > isymbols
+ls -l ../FreeUDFLib.so
+rm -f asymbols
+
+if [ $# -gt 0 ]; then
+# See if we do some tests
+  if [ $1 = "-t" ]; then
+    rm log superlog
+    $IB_ROOT/bin/isql -o log -i ../tests/test.sql -e -u sysdba -p masterkey "localhost:/usr/interbase/cdstock.gdb" 
+    $IB_ROOT/bin/isql -o superlog -i ../tests/supertest.sql -e -u sysdba -p masterkey "localhost:/usr/interbase/cdstock.gdb" 
+
+# See if we want to read logs
+    if [ $# -gt 1 ]; then
+      if [ $2 = "-l" ]; then
+        less log
+        less superlog
+      fi
+    fi
+  fi
+
+# See if we are building a test
+  if [ $1 = "-bt" ]; then
+    cc -DSTANDALONE -Wall -g3 -O -o test test.c
+#    cc -Wall -g3 -O -o test2 test2.c 
+#-lmd -lcrypt
+    ./test
+#    ./test2
+  fi
+fi

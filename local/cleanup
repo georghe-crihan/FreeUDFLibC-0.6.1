@@ -1,0 +1,14 @@
+#!/bin/sh
+IB_ROOT=/usr/interbase
+IB_UDF_ROOT=/usr/interbase/UDF;
+
+for A in `cat libraries`; do
+  rm -f $IB_UDF_ROOT/$A.so;
+done;
+
+for A in $IB_UDF_ROOT/server $IB_UDF_ROOT/FreeUDFLib.so  /usr/interbase/lib/FreeUDFLib.so ../FreeUDFLib.so; do
+  rm -f $A
+done
+
+cp /dev/null /var/log/info
+ipcs

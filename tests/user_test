@@ -1,3 +1,5 @@
+#!/usr/interbase/bin/isql -i
+;
 CONNECT "/usr/interbase/isc4.gdb"
   USER "SYSDBA"
   PASSWORD "masterkey";

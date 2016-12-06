@@ -1,3 +1,5 @@
+#!/usr/interbase/bin/isql -i
+;
 INPUT connect.sql;
 
 SELECT f_EvaluateExpression('"aba"+"a">"aba" /* TRUE */', '') FROM rdb$database;

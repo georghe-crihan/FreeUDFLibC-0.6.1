@@ -1,0 +1,15 @@
+#!/usr/interbase/bin/isql -i
+;
+-- 
+-- 
+--
+CONNECT "localhost:/usr/interbase/ibdon.gdb"
+USER sysdba
+PASSWORD masterkey;
+-- SET ECHO ON;
+
+
+-- SELECT * FROM titre;
+SHOW TABLE nbabonne;
+SELECT * FROM nbabonne;
+EXIT;

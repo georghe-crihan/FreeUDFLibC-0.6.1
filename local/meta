@@ -1,0 +1,22 @@
+#!/usr/interbase/bin/isql -i
+;
+-- 
+-- 
+--
+INPUT ../tests/connect.sql;
+-- SET ECHO ON;
+
+SET SQL DIALECT 1;
+
+-- INPUT loc_ext_functions.sql;
+-- COMMIT;
+
+
+-- SELECT f_majnp('sfdf,sfds') FROM rdb$database;
+-- SELECT f_StartSocketServer(1024) FROM rdb$database;
+-- SELECT f_phonetiser('souschaine') FROM rdb$database;
+-- SELECT f_phonetiser('grange') FROM rdb$database;
+-- SELECT f_StartSocketServer(1024) FROM rdb$database;
+SELECT f_formatdate('2//4//99', 'mm dd yy') FROM rdb$database;
+SELECT f_ageinmonths('5/5/99', '4/3/99') FROM rdb$database;
+EXIT;

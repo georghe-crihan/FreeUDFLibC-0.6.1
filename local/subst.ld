@@ -1,0 +1,12 @@
+--defsym Heure=hourcolonmin
+--defsym AjouteChaineAFichier=DumpBlobToFile
+--defsym BlobTran=BlobReplace
+--defsym BlobComp=BlobBinCmp
+--defsym ExtraitMotBlob=FindNthWordBlob
+--defsym len=StringLength
+--defsym strtran=Replace
+--defsym carleft=Left
+--defsym alltrim=lrTrim
+--defsym arrondidev=RoundD
+--defsym extraitmot=FindNthWord
+

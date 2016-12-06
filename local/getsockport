@@ -1,0 +1,9 @@
+#!/usr/interbase/bin/isql -i
+;
+CONNECT "localhost:/usr/interbase/ibdon.gdb"
+USER sysdba
+PASSWORD fuck;
+
+SELECT vn FROM param WHERE annexe = "V" AND cle = "SOCKETPORT";
+-- UPDATE param SET vn=5070 WHERE annexe = "V" AND cle = "SOCKETPORT";
+EXIT;

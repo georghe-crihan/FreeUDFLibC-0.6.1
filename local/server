@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+use strict;
+require 'sys/socket.ph';
+
+my $log='/usr/interbase/log/PpkServerSocketLog.txt';
+
+my $port=shift || 660;
+my $sockadr = 'S n a4 x8';
+$port=$1 if $port =~ /(\d+)/;
+chop(my $hostname = 'hostname');
+
+my ($name, $aliases, $proto) = getprotobyname('tcp');
+
+my $thisport = pack($sockadr, &AF_INET, $port, "\0\0\0\0");
+
+socket(S, &PF_INET, &SOCK_STREAM, $proto) || die($!);
+setsockopt(S, &SOL_SOCKET, &SO_REUSEADDR, pack("l",1));
+bind(S,$thisport) || die($!);
+listen(S,5) || die($!);
+
+my $adr=accept(NS,S) || die($!);
+my ($af,$port,$inetadr)=unpack($sockadr, $adr);
+my @inetadr=unpack('C4', $inetadr);
+my $ha=gethostbyaddr(@inetadr, &AF_INET);
+
+do {
+  recv(NS, $a, 250,0);
+
+  if ($a eq 'StartIB') {
+# Stub
+    send(NS, 'IBStarted',0);
+    }
+
+  if ($a eq 'coucou') {
+    send(NS, 'la voila', 0);
+    }
+
+  open(LOG, ">>$log");
+  print LOG "[", scalar gmtime, "] $port $ha (@inetadr): $a\n";
+  close LOG;
+  } until $a eq 'StopSocketServer';
+
+close NS;
+shutdown(S, &SHUT_RDWR);

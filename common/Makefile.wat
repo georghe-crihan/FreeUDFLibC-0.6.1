@@ -1,7 +1,7 @@
 # Makefile for WATCOM. You may need to edit config.h
 DATOBJ=gds32dat.lib
 IB_ROOT=C:\PROGRA~1\INTERB~1\INTERB~1
-TIB_ROOT=
+TIB_ROOT=D:\pap\orig\client~1
 INC=$(TIB_ROOT)\include
 ILIB=$(TIB_ROOT)\lib
 CC=wcc386
@@ -10,8 +10,8 @@ LD=wlink
 LFLAGS=LIBPATH $(ILIB) RUNTIME console LIB CLIB3R LIB NT
 CFLAGS=-W4 -ox -i=$(INC) -i=common -i=. -D_WIN32
 
-OBJECTS=md5.obj setenv.obj syslog.obj strlcpy.obj gmtime_r.obj windows.obj Debug.obj User.obj Misc.obj DateFncs.obj BlobFncs.obj Encrypt.obj MathFncs.obj StrFncs.obj ExprPars.obj Lexer.obj
-OBJECTSl=md5.obj,setenv.obj,syslog.obj,strlcpy.obj,gmtime_r.obj,windows.obj,Debug.obj,User.obj,Misc.obj,DateFncs.obj,BlobFncs.obj,Encrypt.obj,MathFncs.obj,StrFncs.obj,ExprPars.obj,Lexer.obj
+OBJECTS=MD5.obj setenv.obj syslog.obj strlcpy.obj gmtime_r.obj windows.obj Debug.obj User.obj Misc.obj DateFncs.obj BlobFncs.obj Encrypt.obj MathFncs.obj StrFncs.obj ExprPars.obj Lexer.obj ppk_buf.obj access.obj ppkib1.obj formatdatetime.obj phonetiser.obj
+OBJECTSl=MD5.obj,setenv.obj,syslog.obj,strlcpy.obj,gmtime_r.obj,windows.obj,Debug.obj,User.obj,Misc.obj,DateFncs.obj,BlobFncs.obj,Encrypt.obj,MathFncs.obj,StrFncs.obj,ExprPars.obj,Lexer.obj,ppk_buf.obj,access.obj,ppkib1.obj,formatdatetime.obj,phonetiser.obj
 
 FreeUDFLib.dll: $(OBJECTS) $(DATOBJ)
 	$(LD) $(LFLAGS) system nt_dll EXP=FreeUDFLib.def lib ib_util lib gds32.lib $(DATOBJ) F $(OBJECTSl)>>build.log
@@ -47,8 +47,8 @@ ExprPars.obj: ExprPars.c
 Lexer.obj: Lexer.c
 	$(CC) $(CFLAGS) Lexer.c >> build.log
 
-md5.obj: common\md5.c
-	$(CC) $(CFLAGS) common\md5.c >> build.log
+MD5.obj: common\MD5.c
+	$(CC) $(CFLAGS) common\MD5.c >> build.log
 
 setenv.obj: common\setenv.c
 	$(CC) $(CFLAGS) common\setenv.c >> build.log
@@ -67,6 +67,20 @@ windows.obj: windows.c
 
 # Local stuff
 
+access.obj: local\access.c
+	$(CC) $(CFLAGS) local\access.c >> build.log
+
+ppkib1.obj: local\ppkib1.c
+	$(CC) $(CFLAGS) local\ppkib1.c >> build.log
+
+ppk_buf.obj: local\ppk_buf.c
+	$(CC) $(CFLAGS) local\ppk_buf.c >> build.log
+
+formatdatetime.obj: local\formatdatetime.c
+	$(CC) $(CFLAGS) local\formatdatetime.c >> build.log
+
+phonetiser.obj: local\phonetiser.c
+	$(CC) $(CFLAGS) local\phonetiser.c >> build.log
 
 # If You have a broken gds32_ms.lib
 gds32dat.lib:
@@ -80,4 +94,6 @@ distclean: clean
 	del FreeUDFLib.dll 
 
 inst:
-	copy FreeUDFLib.dll $(IB_ROOT)\lib\
+	copy FreeUDFLib.dll $(IB_ROOT)\lib\ppkib1.dll 
+	copy FreeUDFLib.dll $(IB_ROOT)\lib\ppkIbacces.dll
+        copy FreeUDFLib.dll $(IB_ROOT)\lib\PpkUDFLib.dll

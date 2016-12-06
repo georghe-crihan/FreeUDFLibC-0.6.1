@@ -1,0 +1,34 @@
+#!/bin/sh
+# FreeBSD & Firebird
+IBRoot=/usr/interbase/UDF;
+# RH Linux 6 & IB 5.6
+#IBRoot=/usr/lib;
+IBRootS=/usr/interbase/lib;
+
+#cp ../FreeUDFLib.so $IBRoot
+PLATFORM=FreeBSD;
+
+case $PLATFORM in
+  FreeBSD)
+# FreeBSD & Firebird
+    for A in `cat libraries`;
+    do
+      rm -f $IBRoot/$A.so;
+      ln -f $IBRootS/FreeUDFLib.so $IBRoot/$A.so;
+      chmod 440 $IBRoot/$A.so;
+    done;
+    chown firebird:firebird $IBRoot/*;
+  ;;
+ linux)
+# RH Linux 6 & IB 5.6
+    for A in `cat libraries`;
+    do
+      rm -f $IBRoot/$A;
+      ln -f $IBRootS/FreeUDFLib.so $IBRoot/$A;
+      chmod 440 $IBRoot/$A;
+    done;
+  ;;
+esac;
+
+cp server* $IBRoot/;
+chmod 770 $IBRoot/server*

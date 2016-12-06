@@ -1,0 +1,1 @@
+perl -e 'foreach(unpack("c*",<>)){print chr,", "}'<CHAR

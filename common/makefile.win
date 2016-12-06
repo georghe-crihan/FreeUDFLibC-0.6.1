@@ -1,7 +1,7 @@
 # Makefile for MSVC. You may need to edit config.h
 DATOBJ=gds32dat.lib
 IB_ROOT=C:\PROGRA~1\INTERB~1\INTERB~1
-TIB_ROOT=
+TIB_ROOT=D:\pap\orig\client~1
 INC=$(TIB_ROOT)\include
 ILIB=$(TIB_ROOT)\lib
 AR=lib
@@ -10,11 +10,12 @@ LFLAGS=-libpath:$(LIB) -libpath:$(ILIB)
 CFLAGS=-W4 -Ox -nologo -I$(INC) -I common -I.
 
 # Support
-OBJECTS=md5.obj setenv.obj syslog.obj strlcpy.obj gmtime_r.obj windows.obj\
+OBJECTS=MD5.obj setenv.obj syslog.obj strlcpy.obj gmtime_r.obj windows.obj\
 # Core
 	Debug.obj User.obj Misc.obj DateFncs.obj BlobFncs.obj Encrypt.obj\
-	MathFncs.obj StrFncs.obj ExprPars.obj Lexer.obj
+	MathFncs.obj StrFncs.obj ExprPars.obj Lexer.obj\
 # Local
+	ppk_buf.obj access.obj ppkib1.obj formatdatetime.obj phonetiser.obj
 
 FreeUDFLib.dll: $(OBJECTS) $(DATOBJ)
 	$(LD) $(LFLAGS) -out:FreeUDFLib.dll -subsystem:console -def:FreeUDFLib.def -dll \
@@ -51,8 +52,8 @@ ExprPars.obj: ExprPars.c
 Lexer.obj: Lexer.c
 	$(CC) $(CFLAGS) -c Lexer.c >> build.log
 
-md5.obj: common/md5.c
-	$(CC) $(CFLAGS) -c common/md5.c >> build.log
+MD5.obj: common/MD5.c
+	$(CC) $(CFLAGS) -c common/MD5.c >> build.log
 
 setenv.obj: common/setenv.c
 	$(CC) $(CFLAGS) -c common/setenv.c >> build.log
@@ -71,6 +72,21 @@ windows.obj: windows.c
 
 # Local stuff
 
+access.obj: local/access.c
+	$(CC) $(CFLAGS) -c local/access.c >> build.log
+
+ppkib1.obj: local/ppkib1.c
+	$(CC) $(CFLAGS) -c local/ppkib1.c >> build.log
+
+ppk_buf.obj: local/ppk_buf.c
+	$(CC) $(CFLAGS) -c local/ppk_buf.c >> build.log
+
+formatdatetime.obj: local/formatdatetime.c
+	$(CC) $(CFLAGS) -c local/formatdatetime.c >> build.log
+
+phonetiser.obj: local/phonetiser.c
+	$(CC) $(CFLAGS) -c local/phonetiser.c >> build.log
+
 # If You have a broken gds32_ms.lib
 gds32dat.lib: gds32dat.def
 	$(AR) -def:gds32dat.def -out:gds32dat.lib >> build.log
@@ -82,4 +98,6 @@ distclean: clean
 	del FreeUDFLib.dll 
 
 inst:
-	copy FreeUDFLib.dll $(IB_ROOT)\lib\ 
+	copy FreeUDFLib.dll $(IB_ROOT)\lib\ppkib1.dll 
+	copy FreeUDFLib.dll $(IB_ROOT)\lib\ppkIbacces.dll
+        copy FreeUDFLib.dll $(IB_ROOT)\lib\PpkUDFLib.dll

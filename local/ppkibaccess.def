@@ -1,0 +1,16 @@
+EXPORTS
+StartIb_ServerSocket
+cherchesignal
+compteconnexions
+creerverrou
+debutecriture
+debutsignal
+essaiconnexion
+finconnexion
+finecriture
+finsignal
+forcerecriture
+initcompteur
+liberertousverrous
+libererverrou
+valeurcompteur

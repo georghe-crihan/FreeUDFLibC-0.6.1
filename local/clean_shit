@@ -1,0 +1,13 @@
+#!/usr/interbase/bin/isql -i
+;
+connect "localhost:/usr/interbase/ibdon.gdb"
+  user sysdba
+  password masterkey;
+
+select * from OPER;
+delete from OPER where COPER='PUB';
+delete from OPER where COPER='A';
+delete from OPER where COPER='PPK';
+delete from OPER where COPER='DECALOG';
+commit;
+exit;

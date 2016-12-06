@@ -1,0 +1,45 @@
+#!/bin/sh
+GSEC='/usr/interbase/bin/gsec -user sysdba -password masterkey'
+SECB=/usr/interbase/isc4.gdb;
+
+echo "Creating users..."
+for A in B PUBINT; do
+  $GSEC -database $SECB -add $A -pw ppk
+done
+
+if [ "-paranoid" -eq $2 ]; then
+  echo "Cleaning up shit...";
+  ./clean_shit.sql;
+fi;
+
+if [ "" -ne $1 ]; then
+  echo "Setting SYSDBA password...";
+  $GSEC -database $SECB mod SYSDBA -pw $1; 
+fi;
+
+cat <<EOF
+DO NOT Forget to:
+ - Set PUBINT users' paprika.ini files to:
+    [ALIAS]
+    USER=PUBINT
+    OPEN MODE=READ ONLY
+    PASSWORD=according to table OPER
+
+    [DATA]
+    IBDON=ib:/usr/interbase/ibdon.gdb
+
+    [DATA_DOS]
+    IBDON=c:\con
+
+ - Set B users' paprika.ini files to:
+    [ALIAS]
+    USER=B
+    OPEN MODE=READ/WRITE
+    PASSWORD=according to table OPER
+
+    [DATA]
+    IBDON=ib:/usr/interbase/ibdon.gdb
+
+    [DATA_DOS]
+    IBDON=c:\con
+EOF

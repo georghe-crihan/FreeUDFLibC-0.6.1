@@ -1,0 +1,49 @@
+#!/usr/interbase/bin/isql -i
+;
+-- 
+-- 
+--
+INPUT ../tests/connect.sql;
+-- SET ECHO ON;
+
+
+-- INPUT loc_ext_functions.sql;
+-- COMMIT;
+
+
+SELECT f_EssaiConnexion(0,2,'') FROM rdb$database;
+-- SELECT f_ForceReCriture('c') FROM rdb$database;
+SELECT f_extraitfilepath('  C:\su\fi\fuck\idiot\sd.d  	') FROM rdb$database;
+SELECT f_pluriel('	SEAl ') FROM rdb$database;
+SELECT f_lpos('as', 'carasas') FROM rdb$database;
+SELECT f_combien('as', 'sacaraa') FROM rdb$database;
+SELECT b from t;
+SELECT f_BlobComp(b, b) FROM t;
+SELECT f_BlobSize(b) FROM t;
+SELECT f_BlobAsPChar(b) FROM t;
+SELECT f_BlobLeft(b, 10) FROM t;
+SELECT f_BlobRight(b, 10) FROM t;
+SELECT f_BlobMid(b, 10, 7) FROM t;
+SELECT f_FindNthWordBlob(b, 3) FROM t;
+SELECT f_FindNthWord('ssd dsfr er', 2) FROM t;
+
+SELECT * FROM t;
+UPDATE t SET b=f_strblob('sde gabba ah et h gabbagabbahey ac bba');
+COMMIT;
+SELECT f_BlobAsPChar(b) FROM t;
+COMMIT;
+UPDATE t SET b=f_BlobUpper(b);
+COMMIT; 
+SELECT f_BlobAsPChar(b) FROM t;
+COMMIT;
+
+UPDATE t SET b=f_BlobTran('ABBA', '||', b);
+COMMIT;
+SELECT b FROM t;
+SELECT f_AjouteChaineAFichier('', 'c:de.txt', b) FROM t;
+SELECT f_StartSocketServer(1024) FROM rdb$database;
+SELECT f_souschaine('adsddolgkddfeefdd', 'dd', 2) FROM rdb$database;
+SELECT f_souschaine('dgfs\dsurf\dsurf\dsdgf\dsur', 'dsu', 2) FROM rdb$database;
+SELECT f_strdatetimefrtoib('033/23/99') FROM rdb$database;
+SELECT f_souschaine('\s\xs\ef','', 2) from rdb$database;
+EXIT;
