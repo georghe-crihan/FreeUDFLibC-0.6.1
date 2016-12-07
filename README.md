@@ -1,4 +1,4 @@
-# FreeUDFLibC-0.6.1
+# FreeUDFLibC-0.6.1 - Firebird (formerly InterBase) SQL UDF library.
 
 As obtained from Gregory Deatz.
 
